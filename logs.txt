@@ -1,0 +1,185 @@
+﻿
+> aegis-core@0.1.0 dev
+> next dev
+
+  Γû▓ Next.js 14.2.35
+  - Local:        http://localhost:3000
+  - Environments: .env
+
+ Γ£ô Starting...
+ Γ£ô Ready in 2.2s
+ Γùï Compiling /api/chat ...
+ Γ£ô Compiled /api/chat in 987ms (491 modules)
+ POST /api/chat 401 in 1357ms
+ Γ£ô Compiled in 297ms (491 modules)
+ Γ£ô Compiled in 24ms
+ Γ£ô Compiled /api/chat in 244ms (491 modules)
+node.exe :  Γ¿» PrismaClie
+ntKnownRequestError: 
+At line:1 char:1
++ & "C:\Program 
+Files\nodejs/node.exe" 
+"C:\Program 
+Files\nodejs/node_mo ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo        
+      : NotSpecified: (   
+  Γ¿» PrismaClientKnown   
+ RequestError: :String    
+) [], RemoteException
+    + FullyQualifiedError 
+   Id : NativeCommandErr  
+  or
+ 
+Invalid `prisma.conversati
+on.create()` invocation:
+
+
+Foreign key constraint 
+violated: `foreign key`
+    at 
+$n.handleRequestError (C:\
+Users\Nitro\OneDrive\Docum
+ents\AI\aegis-core\node_mo
+dules\@prisma\client\runti
+me\library.js:121:7315)
+    at $n.handleAndLogRequ
+estError (C:\Users\Nitro\O
+neDrive\Documents\AI\aegis
+-core\node_modules\@prisma
+\client\runtime\library.js
+:121:6623)
+    at $n.request (C:\User
+s\Nitro\OneDrive\Documents
+\AI\aegis-core\node_module
+s\@prisma\client\runtime\l
+ibrary.js:121:6307)
+    at async l (C:\Users\N
+itro\OneDrive\Documents\AI
+\aegis-core\node_modules\@
+prisma\client\runtime\libr
+ary.js:130:9633)
+    at async POST (webpack
+-internal:///(rsc)/./src/a
+pp/api/chat/route.ts:36:22
+)
+    at async C:\Users\Nitr
+o\OneDrive\Documents\AI\ae
+gis-core\node_modules\next
+\dist\compiled\next-server
+\app-route.runtime.dev.js:
+6:57228
+    at async eT.execute (C
+:\Users\Nitro\OneDrive\Doc
+uments\AI\aegis-core\node_
+modules\next\dist\compiled
+\next-server\app-route.run
+time.dev.js:6:46851)
+    at async eT.handle (C:
+\Users\Nitro\OneDrive\Docu
+ments\AI\aegis-core\node_m
+odules\next\dist\compiled\
+next-server\app-route.runt
+ime.dev.js:6:58760)
+    at async doRender (C:\
+Users\Nitro\OneDrive\Docum
+ents\AI\aegis-core\node_mo
+dules\next\dist\server\bas
+e-server.js:1366:42)
+    at async cacheEntry.re
+sponseCache.get.routeKind 
+(C:\Users\Nitro\OneDrive\D
+ocuments\AI\aegis-core\nod
+e_modules\next\dist\server
+\base-server.js:1588:28)
+    at async DevServer.ren
+derToResponseWithComponent
+sImpl (C:\Users\Nitro\OneD
+rive\Documents\AI\aegis-co
+re\node_modules\next\dist\
+server\base-server.js:1496
+:28)
+    at async DevServer.ren
+derPageComponent (C:\Users
+\Nitro\OneDrive\Documents\
+AI\aegis-core\node_modules
+\next\dist\server\base-ser
+ver.js:1924:24)
+    at async DevServer.ren
+derToResponseImpl (C:\User
+s\Nitro\OneDrive\Documents
+\AI\aegis-core\node_module
+s\next\dist\server\base-se
+rver.js:1962:32)
+    at async 
+DevServer.pipeImpl (C:\Use
+rs\Nitro\OneDrive\Document
+s\AI\aegis-core\node_modul
+es\next\dist\server\base-s
+erver.js:922:25)
+    at async NextNodeServe
+r.handleCatchallRenderRequ
+est (C:\Users\Nitro\OneDri
+ve\Documents\AI\aegis-core
+\node_modules\next\dist\se
+rver\next-server.js:272:17
+)
+    at async DevServer.han
+dleRequestImpl (C:\Users\N
+itro\OneDrive\Documents\AI
+\aegis-core\node_modules\n
+ext\dist\server\base-serve
+r.js:818:17)
+    at async C:\Users\Nitr
+o\OneDrive\Documents\AI\ae
+gis-core\node_modules\next
+\dist\server\dev\next-dev-
+server.js:339:20
+    at async 
+Span.traceAsyncFn (C:\User
+s\Nitro\OneDrive\Documents
+\AI\aegis-core\node_module
+s\next\dist\trace\trace.js
+:154:20)
+    at async 
+DevServer.handleRequest (C
+:\Users\Nitro\OneDrive\Doc
+uments\AI\aegis-core\node_
+modules\next\dist\server\d
+ev\next-dev-server.js:336:
+24)
+    at async invokeRender 
+(C:\Users\Nitro\OneDrive\D
+ocuments\AI\aegis-core\nod
+e_modules\next\dist\server
+\lib\router-server.js:179:
+21)
+    at async 
+handleRequest (C:\Users\Ni
+tro\OneDrive\Documents\AI\
+aegis-core\node_modules\ne
+xt\dist\server\lib\router-
+server.js:359:24)
+    at async 
+requestHandlerImpl (C:\Use
+rs\Nitro\OneDrive\Document
+s\AI\aegis-core\node_modul
+es\next\dist\server\lib\ro
+uter-server.js:383:13)
+    at async 
+Server.requestListener (C:
+\Users\Nitro\OneDrive\Docu
+ments\AI\aegis-core\node_m
+odules\next\dist\server\li
+b\start-server.js:141:13) 
+{
+  code: 'P2003',
+  clientVersion: '5.22.0',
+  meta: { modelName: 
+'Conversation', 
+field_name: 'foreign key' 
+}
+}
+ POST /api/chat 500 in 559ms

@@ -1,0 +1,192 @@
+﻿node.exe : APICallError 
+[AI_APICallError]: 
+models/gemini-1.5-pro is 
+not found for API version 
+v1beta, or is not 
+supported for 
+generateContent. Call 
+ListModels to see the 
+list of available models 
+and their supported 
+methods.
+At line:1 char:1
++ & "C:\Program 
+Files\nodejs/node.exe" 
+"C:\Program 
+Files\nodejs/node_mo ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo        
+      : NotSpecified: (A  
+  PICallError [A...port   
+ ed methods.:String) [    
+], RemoteException
+    + FullyQualifiedError 
+   Id : NativeCommandErr  
+  or
+ 
+    at <anonymous> (C:\Use
+rs\Nitro\OneDrive\Document
+s\AI\aegis-core\node_modul
+es\@ai-sdk\provider-utils\
+src\response-handler.ts:56
+:16)
+    at process.processTick
+sAndRejections (node:inter
+nal/process/task_queues:10
+5:5)
+    at async postToApi (C:
+\Users\Nitro\OneDrive\Docu
+ments\AI\aegis-core\node_m
+odules\@ai-sdk\provider-ut
+ils\src\post-to-api.ts:118
+:28)
+    at async GoogleGenerat
+iveAILanguageModel.doStrea
+m (C:\Users\Nitro\OneDrive
+\Documents\AI\aegis-core\n
+ode_modules\@ai-sdk\google
+\src\google-generative-ai-
+language-model.ts:373:50)
+    at async fn (C:\Users\
+Nitro\OneDrive\Documents\A
+I\aegis-core\node_modules\
+ai\src\generate-text\strea
+m-text.ts:1670:27)
+    at async <anonymous> (
+C:\Users\Nitro\OneDrive\Do
+cuments\AI\aegis-core\node
+_modules\ai\src\telemetry\
+record-span.ts:32:24)
+    at async _retryWithExp
+onentialBackoff (C:\Users\
+Nitro\OneDrive\Documents\A
+I\aegis-core\node_modules\
+ai\src\util\retry-with-exp
+onential-backoff.ts:96:12)
+    at async streamStep (C
+:\Users\Nitro\OneDrive\Doc
+uments\AI\aegis-core\node_
+modules\ai\src\generate-te
+xt\stream-text.ts:1622:17)
+    at async fn (C:\Users\
+Nitro\OneDrive\Documents\A
+I\aegis-core\node_modules\
+ai\src\generate-text\strea
+m-text.ts:2135:9)
+    at async <anonymous> (
+C:\Users\Nitro\OneDrive\Do
+cuments\AI\aegis-core\node
+_modules\ai\src\telemetry\
+record-span.ts:32:24) {
+  cause: undefined,
+  url: 'https://generative
+language.googleapis.com/v1
+beta/models/gemini-1.5-pro
+:streamGenerateContent?alt
+=sse',
+  requestBodyValues: {
+    generationConfig: {
+      maxOutputTokens: 
+undefined,
+      temperature: 
+undefined,
+      topK: undefined,
+      topP: undefined,
+      frequencyPenalty: 
+undefined,
+      presencePenalty: 
+undefined,
+      stopSequences: 
+undefined,
+      seed: undefined,
+      responseMimeType: 
+undefined,
+      responseSchema: 
+undefined,
+      responseModalities: 
+undefined,
+      thinkingConfig: 
+undefined
+    },
+    contents: [ [Object] 
+],
+    systemInstruction: { 
+parts: [Array] },
+    safetySettings: 
+undefined,
+    tools: undefined,
+    toolConfig: undefined,
+    cachedContent: 
+undefined,
+    labels: undefined
+  },
+  statusCode: 404,
+  responseHeaders: {
+    'alt-svc': 
+'h3=":443"; 
+ma=2592000,h3-29=":443"; 
+ma=2592000',
+    'content-length': 
+'263',
+    'content-type': 
+'text/event-stream',
+    date: 'Fri, 06 Mar 
+2026 04:44:12 GMT',
+    server: 'scaffolding 
+on HTTPServer2',
+    'server-timing': 
+'gfet4t7; dur=87',
+    vary: 'Origin, 
+X-Origin, Referer',
+    
+'x-content-type-options': 
+'nosniff',
+    'x-frame-options': 
+'SAMEORIGIN',
+    'x-xss-protection': 
+'0'
+  },
+  responseBody: '{\n' +
+    '  "error": {\n' +
+    '    "code": 404,\n' +
+    '    "message": 
+"models/gemini-1.5-pro is 
+not found for API version 
+v1beta, or is not 
+supported for 
+generateContent. Call 
+ListModels to see the 
+list of available models 
+and their supported 
+methods.",\n' +
+    '    "status": 
+"NOT_FOUND"\n' +
+    '  }\n' +
+    '}\n',
+  isRetryable: false,
+  data: {
+    error: {
+      code: 404,
+      message: 
+'models/gemini-1.5-pro is 
+not found for API version 
+v1beta, or is not 
+supported for 
+generateContent. Call 
+ListModels to see the 
+list of available models 
+and their supported 
+methods.',
+      status: 'NOT_FOUND'
+    }
+  },
+  
+Symbol(vercel.ai.error): 
+true,
+  Symbol(vercel.ai.error.A
+I_APICallError): true
+}
+
+Success

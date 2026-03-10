@@ -1,0 +1,46 @@
+﻿node.exe : AI Streaming 
+failed: TypeError: Cannot 
+read properties of 
+undefined (reading 'map')
+At line:1 char:1
++ & "C:\Program 
+Files\nodejs/node.exe" 
+"C:\Program 
+Files\nodejs/node_mo ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo        
+      : NotSpecified: (A  
+  I Streaming fa...(rea   
+ ding 'map'):String) [    
+], RemoteException
+    + FullyQualifiedError 
+   Id : NativeCommandErr  
+  or
+ 
+    at 
+convertToModelMessages (C:
+\Users\Nitro\OneDrive\Docu
+ments\AI\aegis-core\node_m
+odules\ai\src\ui\convert-t
+o-model-messages.ts:94:14)
+    at test (C:\Users\Nitr
+o\OneDrive\Documents\AI\ae
+gis-core\reproduce.mts:12:
+38)
+    at <anonymous> (C:\Use
+rs\Nitro\OneDrive\Document
+s\AI\aegis-core\reproduce.
+mts:27:1)
+    at ModuleJob.run (node
+:internal/modules/esm/modu
+le_job:377:25)
+    at async onImport.trac
+ePromise.__proto__ (node:i
+nternal/modules/esm/loader
+:691:26)
+    at async asyncRunEntry
+PointWithESMLoader (node:i
+nternal/modules/run_main:1
+01:5)
