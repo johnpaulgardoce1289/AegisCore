@@ -188,9 +188,9 @@ export default function ChatPage() {
             {/* Sidebar */}
             <div className={`
                 fixed lg:relative inset-y-0 left-0 z-50 bg-[#050505] border-r border-white/5 transition-all duration-500 ease-in-out flex flex-col
-                ${isSidebarOpen ? 'w-80 translate-x-0' : 'w-0 -translate-x-full lg:translate-x-0 lg:w-0 overflow-hidden border-none'}
+                ${isSidebarOpen ? 'w-[280px] sm:w-80 translate-x-0' : 'w-0 -translate-x-full lg:translate-x-0 lg:w-0 overflow-hidden border-none'}
             `}>
-                <div className="p-8 flex items-center justify-between min-w-[320px]">
+                <div className="p-6 sm:p-8 flex items-center justify-between min-w-[280px] sm:min-w-[320px]">
                     <Link href="/" className="flex items-center space-x-3">
                         <div className="w-10 h-10 bg-gradient-to-tr from-indigo-500 to-purple-600 rounded-xl flex items-center justify-center shadow-lg border border-white/10">
                             <Sparkles className="w-5 h-5 text-white" />
@@ -202,7 +202,7 @@ export default function ChatPage() {
                     </button>
                 </div>
 
-                <div className="px-6 mb-8 min-w-[320px]">
+                <div className="px-4 sm:px-6 mb-8 min-w-[280px] sm:min-w-[320px]">
                     <button
                         onClick={startNewChat}
                         className="w-full group flex items-center justify-center space-x-2 p-4 bg-indigo-600 hover:bg-indigo-500 text-white rounded-[1.25rem] font-black uppercase text-xs tracking-widest shadow-xl transition-all active:scale-95"
@@ -212,7 +212,7 @@ export default function ChatPage() {
                     </button>
                 </div>
 
-                <div className="flex-grow overflow-y-auto px-4 custom-scrollbar min-w-[320px]">
+                <div className="flex-grow overflow-y-auto px-2 sm:px-4 custom-scrollbar min-w-[280px] sm:min-w-[320px]">
                     <div className="text-[10px] font-black text-neutral-600 uppercase tracking-[0.3em] mt-6 mb-4 px-4 flex items-center">
                         <History className="w-3 h-3 mr-3 text-indigo-500" />
                         Neural Records
@@ -248,7 +248,7 @@ export default function ChatPage() {
             {/* Main Content Area */}
             <div className={`flex-grow flex flex-col relative h-full bg-[#080808] transition-all duration-500`}>
                 {/* Header (AI Choices on Left, Profile on Right) */}
-                <header className="h-20 flex items-center justify-between px-8 border-b border-white/5 bg-black/40 backdrop-blur-3xl shrink-0 z-40">
+                <header className="h-20 flex items-center justify-between px-4 sm:px-8 border-b border-white/5 bg-black/40 backdrop-blur-3xl shrink-0 z-40">
                     <div className="flex items-center space-x-6">
                         {/* Sidebar Toggle */}
                         <button
@@ -262,7 +262,7 @@ export default function ChatPage() {
                         <div className="relative">
                             <button
                                 onClick={() => setModelDropdownOpen(!isModelDropdownOpen)}
-                                className="flex items-center space-x-3 px-5 py-2.5 bg-white/[0.03] border border-white/10 rounded-2xl hover:bg-white/5 transition-all group min-w-[180px]"
+                                className="flex items-center space-x-3 px-3 sm:px-5 py-2.5 bg-white/[0.03] border border-white/10 rounded-2xl hover:bg-white/5 transition-all group min-w-[140px] sm:min-w-[180px]"
                             >
                                 <div className={`w-2 h-2 rounded-full animate-pulse ${selectedModel === 'OpenAI' ? 'bg-indigo-500 shadow-[0_0_8px_indigo]' : selectedModel === 'Gemini' ? 'bg-purple-500 shadow-[0_0_8px_purple]' : selectedModel.includes('Claude') ? 'bg-orange-500 shadow-[0_0_8px_orange]' : selectedModel === 'Aegis V1' ? 'bg-blue-500 shadow-[0_0_8px_blue]' : 'bg-emerald-500 shadow-[0_0_8px_emerald]'}`} />
                                 <span className="text-xs font-black uppercase tracking-widest text-white/90 truncate">
@@ -337,7 +337,7 @@ export default function ChatPage() {
                 {/* Chat Area */}
                 <div
                     ref={scrollRef}
-                    className="flex-grow overflow-y-auto w-full max-w-5xl mx-auto py-12 px-8 custom-scrollbar relative z-10"
+                    className="flex-grow overflow-y-auto w-full max-w-5xl mx-auto py-8 sm:py-12 px-4 sm:px-8 custom-scrollbar relative z-10"
                 >
                     {messages.length === 0 ? (
                         <div className="h-full flex flex-col items-center justify-center text-center max-w-2xl mx-auto pb-40">
@@ -379,8 +379,8 @@ export default function ChatPage() {
                         <div className="space-y-12 pb-44">
                             {messages.map((m) => (
                                 <div key={m.id} className="animate-in fade-in slide-in-from-bottom-4 duration-500">
-                                    <div className={`flex gap-6 ${m.role === 'user' ? 'flex-row-reverse' : 'flex-row'}`}>
-                                        <div className={`w-12 h-12 rounded-2xl flex items-center justify-center flex-shrink-0 shadow-2xl overflow-hidden
+                                    <div className={`flex gap-3 sm:gap-6 ${m.role === 'user' ? 'flex-row-reverse' : 'flex-row'}`}>
+                                        <div className={`w-10 h-10 sm:w-12 sm:h-12 rounded-2xl flex items-center justify-center flex-shrink-0 shadow-2xl overflow-hidden
                                             ${m.role === 'user'
                                                 ? 'bg-gradient-to-br from-indigo-500 to-purple-600 border border-white/20'
                                                 : 'bg-[#111] border border-white/5 ring-4 ring-indigo-500/5'
@@ -398,7 +398,7 @@ export default function ChatPage() {
                                                 {m.role === 'user' ? 'Input Stream' : 'Neural Output'}
                                             </div>
                                             <div className={`shadow-2xl ${m.role === 'user'
-                                                ? 'bg-neutral-100 p-6 rounded-[2rem] rounded-tr-none text-black font-semibold shadow-indigo-500/5'
+                                                ? 'bg-neutral-100 p-4 sm:p-6 rounded-[1.5rem] sm:rounded-[2rem] rounded-tr-none text-black font-semibold shadow-indigo-500/5'
                                                 : 'w-full'
                                                 }`}>
                                                 {m.role === 'user' ? (
@@ -422,7 +422,7 @@ export default function ChatPage() {
                 </div>
 
                 {/* Input Area */}
-                <div className="absolute bottom-0 left-0 right-0 p-8 z-30">
+                <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-8 z-30">
                     <div className="max-w-4xl mx-auto relative group">
                         {/* Static Glow */}
                         <div className="absolute -inset-1 bg-gradient-to-r from-indigo-500/10 to-purple-500/10 blur-2xl rounded-[3rem] opacity-50 group-hover:opacity-100 transition-opacity" />

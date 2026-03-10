@@ -131,4 +131,7 @@ export const authOptions: NextAuthOptions = {
     },
 
     secret: process.env.NEXTAUTH_SECRET || "super_secret_dev_key",
+    pages: {
+        signIn: "/login",
+    },
 };
