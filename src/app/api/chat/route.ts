@@ -186,9 +186,12 @@ export async function POST(req: NextRequest) {
                 if (selectedModel.toLowerCase().includes("claude") || selectedModel === "Anthropic") {
                     try {
                         const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
-                        const claudeModelString = selectedModel.includes("3.5")
-                            ? "claude-3-5-sonnet-20241022"
-                            : "claude-3-7-sonnet-20250219";
+                        let claudeModelString = "claude-3-7-sonnet-20250219";
+                        if (selectedModel.includes("3.5") || selectedModel.includes("4.0")) {
+                            claudeModelString = "claude-3-5-sonnet-20241022";
+                        } else if (selectedModel.includes("4.6")) {
+                            claudeModelString = "claude-3-7-sonnet-20250219";
+                        }
 
                         const claudeStream = await anthropic.messages.create({
                             model: claudeModelString,

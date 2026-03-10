@@ -179,8 +179,8 @@ export default function ChatPage() {
         { id: "Aegis V1", name: "Aegis V1", sub: "Standard Neural Engine", color: "text-blue-400" },
         { id: "OpenAI", name: "Open AI (GPT-4o)", sub: "Most Capable Model", color: "text-indigo-400" },
         { id: "Gemini", name: "Gemini (1.5 Pro)", sub: "Fast & Precise", color: "text-purple-400" },
-        { id: "Claude 3.7", name: "Claude 3.7 Sonnet", sub: "Most Intelligent Model", color: "text-orange-400" },
-        { id: "Claude 3.5", name: "Claude 3.5 Sonnet", sub: "Previous Generation", color: "text-yellow-400" },
+        { id: "Claude 4.6", name: "Claude 4.6 Sonnet", sub: "Most Intelligent Model", color: "text-orange-400" },
+        { id: "Claude 4.0", name: "Claude 4.0 Sonnet", sub: "Previous Generation", color: "text-yellow-400" },
         { id: "Aegis Image Genesis", name: "Image Generator", sub: "Visual Creation Engine", color: "text-emerald-400" },
     ];
 
