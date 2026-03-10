@@ -15,6 +15,7 @@ import {
     ChevronDown,
     LayoutDashboard
 } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { MarkdownRenderer } from "@/components/MarkdownRenderer";
@@ -300,7 +301,14 @@ export default function ChatPage() {
                             <div className="relative group">
                                 <div className="w-10 h-10 rounded-full bg-indigo-600/20 border border-indigo-500/30 flex items-center justify-center cursor-pointer overflow-hidden shadow-lg hover:shadow-indigo-500/20 transition-all">
                                     {session.user.image ? (
-                                        <img src={session.user.image} alt="Profile" className="w-full h-full object-cover" />
+                                        <Image
+                                            src={session.user.image}
+                                            alt="Profile"
+                                            width={40}
+                                            height={40}
+                                            className="w-full h-full object-cover"
+                                            unoptimized // For external Google images
+                                        />
                                     ) : (
                                         <span className="text-white font-black text-sm uppercase">
                                             {session.user.name?.charAt(0) || "U"}

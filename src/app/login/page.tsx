@@ -9,7 +9,6 @@ import {
     Lock,
     ArrowRight,
     Loader2,
-    ShieldCheck,
     Chrome,
     AlertCircle,
     CheckCircle2
@@ -17,12 +16,11 @@ import {
 import Link from "next/link";
 
 export default function LoginPage() {
-    const { data: session, status } = useSession();
+    const { status } = useSession();
     const router = useRouter();
 
     const [email, setEmail] = useState("");
     const [code, setCode] = useState("");
-    const [isStepTwo, setIsStepTwo] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState("");
     const [successMessage, setSuccessMessage] = useState("");
@@ -51,9 +49,9 @@ export default function LoginPage() {
             }
 
             setSuccessMessage("Secure code transmitted to your terminal (Email).");
-            setIsStepTwo(true);
-        } catch (err: any) {
-            setError(err.message || "Uplink Failed");
+        } catch (err: unknown) {
+            const message = err instanceof Error ? err.message : "Uplink Failed";
+            setError(message);
         } finally {
             setIsLoading(false);
         }
