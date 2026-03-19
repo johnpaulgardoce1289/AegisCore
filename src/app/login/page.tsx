@@ -133,13 +133,13 @@ export default function LoginPage() {
                             </div>
                         )}
 
-                        <form onSubmit={handleAuth} className="space-y-10">
+                        <form onSubmit={handleAuth} className="space-y-8">
                             {/* Email Input Group */}
-                            <div className="space-y-4">
-                                <label className="text-[11px] font-black uppercase tracking-[0.2em] text-neutral-600 ml-1">Email Terminal Address</label>
-                                <div className="flex gap-2 relative group/input">
+                            <div className="space-y-3">
+                                <label className="text-[10px] font-black uppercase tracking-[0.2em] text-neutral-600 ml-1">Email Terminal Address</label>
+                                <div className="flex flex-col sm:flex-row gap-3 relative group/input">
                                     <div className="relative flex-grow">
-                                        <div className="absolute inset-y-0 left-0 pl-7 flex items-center pointer-events-none text-neutral-700 transition-colors group-focus-within/input:text-indigo-400">
+                                        <div className="absolute inset-y-0 left-0 pl-5 flex items-center pointer-events-none text-neutral-600 transition-colors group-focus-within/input:text-indigo-500">
                                             <Mail className="w-4 h-4" />
                                         </div>
                                         <input
@@ -148,14 +148,14 @@ export default function LoginPage() {
                                             value={email}
                                             onChange={(e) => setEmail(e.target.value)}
                                             placeholder="youremail@proton.me"
-                                            className="w-full bg-white/[0.02] border border-white/5 rounded-[1.5rem] py-6 pl-15 pr-6 text-[14px] font-black text-white/90 placeholder-neutral-800 outline-none focus:border-white/10 focus:bg-white/[0.04] transition-all"
+                                            className="w-full bg-white/[0.03] border border-white/5 rounded-2xl py-5 pl-12 pr-4 text-[13px] font-bold text-neutral-200 placeholder-neutral-800 outline-none focus:border-white/10 focus:bg-white/[0.05] transition-all"
                                         />
                                     </div>
                                     <button
                                         type="button"
                                         onClick={handleSendOTP}
                                         disabled={isLoading || !email}
-                                        className="px-8 bg-[#1a1a1a] border border-white/5 text-neutral-600 rounded-[1.5rem] text-[10px] font-black uppercase tracking-widest hover:text-white hover:bg-[#222] transition-all disabled:opacity-20 active:scale-95 shadow-2xl"
+                                        className="sm:w-32 py-5 bg-[#1a1a1a] border border-white/5 text-neutral-500 rounded-2xl text-[10px] font-black uppercase tracking-widest hover:text-white hover:bg-[#222] transition-all disabled:opacity-20 active:scale-95 shadow-xl whitespace-nowrap"
                                     >
                                         {isLoading ? <Loader2 className="w-4 h-4 animate-spin mx-auto" /> : "Send Code"}
                                     </button>
@@ -163,10 +163,10 @@ export default function LoginPage() {
                             </div>
 
                             {/* Code Input Group */}
-                            <div className="space-y-4">
-                                <label className="text-[11px] font-black uppercase tracking-[0.2em] text-neutral-600 ml-1">Secure Protocol Code</label>
+                            <div className="space-y-3">
+                                <label className="text-[10px] font-black uppercase tracking-[0.2em] text-neutral-600 ml-1">Secure Protocol Code</label>
                                 <div className="relative group/input">
-                                    <div className="absolute inset-y-0 left-0 pl-7 flex items-center pointer-events-none text-neutral-700 transition-colors group-focus-within/input:text-indigo-400">
+                                    <div className="absolute inset-y-0 left-0 pl-5 flex items-center pointer-events-none text-neutral-600 transition-colors group-focus-within/input:text-indigo-500">
                                         <Lock className="w-4 h-4" />
                                     </div>
                                     <input
@@ -175,7 +175,7 @@ export default function LoginPage() {
                                         value={code}
                                         onChange={(e) => setCode(e.target.value)}
                                         placeholder="0 0 0 0 0 0"
-                                        className="w-full bg-white/[0.02] border border-white/5 rounded-[1.5rem] py-6 pl-15 pr-6 text-[14px] font-black tracking-[0.6em] text-white/90 placeholder-neutral-800 outline-none focus:border-white/10 focus:bg-white/[0.04] transition-all"
+                                        className="w-full bg-white/[0.03] border border-white/5 rounded-2xl py-5 pl-12 pr-4 text-[13px] font-black tracking-[0.4em] text-neutral-200 placeholder-neutral-800 outline-none focus:border-white/10 focus:bg-white/[0.05] transition-all"
                                     />
                                 </div>
                             </div>
@@ -184,10 +184,10 @@ export default function LoginPage() {
                             <button
                                 type="submit"
                                 disabled={isLoading || !code}
-                                className="w-full group bg-[#333]/40 hover:bg-[#444]/40 border border-white/10 text-white font-black uppercase text-[13px] tracking-[0.3em] py-7 rounded-[1.5rem] shadow-3xl transition-all active:scale-[0.98] flex items-center justify-center space-x-4"
+                                className="w-full group bg-neutral-100/10 hover:bg-neutral-100/15 border border-white/10 text-white font-black uppercase text-[11px] sm:text-[12px] tracking-[0.2em] py-6 sm:py-7 rounded-2xl shadow-3xl transition-all active:scale-[0.98] flex items-center justify-center space-x-3"
                             >
-                                <span>Sign In With Secure Protocol</span>
-                                <ArrowRight className="w-4 h-4 opacity-70 group-hover:translate-x-1.5 transition-transform" />
+                                <span className="truncate">Sign In With Secure Protocol</span>
+                                <ArrowRight className="w-4 h-4 opacity-50 flex-shrink-0 group-hover:translate-x-1 transition-transform" />
                             </button>
                         </form>
 
