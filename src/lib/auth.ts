@@ -92,10 +92,10 @@ export const authOptions: NextAuthOptions = {
                 }
 
                 // --- 2. SESSION_STEP: Try Stored Password (Traditional Auth) ---
-                let user: any = await prisma.user.findUnique({ where: { email } });
+                let user = await prisma.user.findUnique({ where: { email } });
                 if (user && user.password && codeOrPass) {
                     const bcrypt = await import("bcryptjs");
-                    const isValid = await bcrypt.compare(codeOrPass, user.password as string);
+                    const isValid = await bcrypt.compare(codeOrPass, user.password);
                     if (isValid) {
                         console.log(`[AUTH] Password verification successful for ${email}`);
                         recordAttempt(email, true);

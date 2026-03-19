@@ -30,7 +30,7 @@ export async function POST(req: NextRequest) {
                 email,
                 password: hashedPassword,
                 role: "USER"
-            } as any
+            }
         });
 
         return NextResponse.json({
@@ -38,7 +38,7 @@ export async function POST(req: NextRequest) {
             user: { id: user.id, email: user.email, name: user.name }
         });
 
-    } catch (error: any) {
+    } catch (error: unknown) {
         console.error("Registration Error:", error);
         return new NextResponse("Neural Uplink Failure", { status: 500 });
     }
