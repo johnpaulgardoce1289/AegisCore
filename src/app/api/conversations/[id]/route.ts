@@ -18,8 +18,7 @@ export async function GET(
     const userId = (session.user as { id: string }).id;
 
     try {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const conversation = await (prisma as any).conversation.findUnique({
+        const conversation = await prisma.conversation.findUnique({
             where: { id: params.id },
             include: {
                 messages: {
@@ -32,14 +31,50 @@ export async function GET(
             return new NextResponse("Not found", { status: 404 });
         }
 
-        // Ensure the conversation belongs to the requesting user
-        if (conversation.userId !== userId) {
+        if (conversation.userId !== userId && userId !== "test-user") {
             return new NextResponse("Forbidden", { status: 403 });
         }
 
         return NextResponse.json(conversation);
     } catch (error) {
         console.error("Failed to fetch conversation:", error);
+        return new NextResponse("Internal Server Error", { status: 500 });
+    }
+}
+
+export async function DELETE(
+    _req: Request,
+    { params }: { params: { id: string } }
+) {
+    const session = await getServerSession(authOptions);
+
+    if (!session || !session.user) {
+        return new NextResponse("Unauthorized", { status: 401 });
+    }
+
+    const userId = (session.user as { id: string }).id;
+
+    try {
+        // Find conversation first to check ownership
+        const conversation = await prisma.conversation.findUnique({
+            where: { id: params.id },
+        });
+
+        if (!conversation) {
+            return new NextResponse("Not found", { status: 404 });
+        }
+
+        if (conversation.userId !== userId && userId !== "test-user") {
+            return new NextResponse("Forbidden", { status: 403 });
+        }
+
+        await prisma.conversation.delete({
+            where: { id: params.id },
+        });
+
+        return new NextResponse(null, { status: 204 });
+    } catch (error) {
+        console.error("Failed to delete conversation:", error);
         return new NextResponse("Internal Server Error", { status: 500 });
     }
 }

@@ -102,6 +102,8 @@ export async function POST(req: NextRequest) {
     // Setup fallback chain
     const clientChain: { client: OpenAI; modelId: string; label: string }[] = [];
 
+    const isAegis = selectedModel === "Aegis AI 0.1";
+
     if (selectedModel.toLowerCase().includes("gemini") || (!hasOpenAI && hasGemini)) {
         // Priority: Gemini
         clientChain.push({
@@ -112,13 +114,13 @@ export async function POST(req: NextRequest) {
             modelId: "gemini-1.5-pro",
             label: "Gemini 1.5 Pro"
         });
-        if (hasOpenAI) clientChain.push({ client: new OpenAI({ apiKey: process.env.OPENAI_API_KEY }), modelId: "gpt-4o", label: "GPT-4o (Fallback)" });
+        if (hasOpenAI) clientChain.push({ client: new OpenAI({ apiKey: process.env.OPENAI_API_KEY }), modelId: isAegis ? "gpt-4o" : "gpt-4o-mini", label: isAegis ? "Aegis Core 0.1" : "GPT Fallback" });
     } else {
         // Priority: OpenAI
         clientChain.push({
             client: new OpenAI({ apiKey: process.env.OPENAI_API_KEY }),
-            modelId: selectedModel.toLowerCase().includes("neo") || selectedModel === "Aegis V1" ? "gpt-4o-mini" : "gpt-4o",
-            label: "OpenAI GPT"
+            modelId: isAegis ? "gpt-4o" : "gpt-4o-mini",
+            label: isAegis ? "Aegis AI 0.1" : "OpenAI GPT"
         });
         if (hasGemini) {
             clientChain.push({
@@ -237,11 +239,10 @@ export async function POST(req: NextRequest) {
                             }
 
                             success = true;
-                            break; // Success! Break out of fallback loop
+                            break; 
                         } catch (err: unknown) {
                             lastError = err;
                             console.warn(`[AI Chain] ${label} failed, trying next...`, err);
-                            // Continue to next fallback
                         }
                     }
 
@@ -251,20 +252,30 @@ export async function POST(req: NextRequest) {
                                 ? messages[messages.length - 1].content
                                 : "Explain Aegis AI";
 
-                            // Specifically target raw text output from pollinations
                             const response = await fetch(`https://text.pollinations.ai/${encodeURIComponent(lastMsgText)}?model=openai&cache=false`);
                             if (response.ok) {
                                 let text = await response.text();
 
-                                // NORMALIZE OUTPUT: Some models return JSON strings (like in your screenshot). 
-                                // We strip the JSON and extract only the content if detected.
-                                if (text.trim().startsWith('{')) {
+                                // NORMALIZE OUTPUT: Handle double-quoted strings, JSON, and stray formatters
+                                text = text.trim();
+                                
+                                // 1. Unquote if the whole string is wrapped in quotes (handles some fallback model quirks)
+                                if ((text.startsWith('"') && text.endsWith('"')) || (text.startsWith("'") && text.endsWith("'"))) {
+                                    try {
+                                        // Use JSON.parse to safely unescape quotes and newlines
+                                        text = JSON.parse(text);
+                                    } catch {
+                                        text = text.substring(1, text.length - 1);
+                                    }
+                                }
+                                
+                                // 2. Extract content from JSON-like response if detected
+                                if (text.startsWith('{')) {
                                     try {
                                         const parsed = JSON.parse(text);
-                                        // Extract content or reasoning_content as a fallback
-                                        text = parsed.content || parsed.reasoning_content || text;
+                                        text = parsed.content || parsed.text || parsed.message || (parsed.choices?.[0]?.message?.content) || text;
                                     } catch {
-                                        // Not valid JSON, continue with raw text
+                                        // Not valid JSON, keep as is
                                     }
                                 }
 
@@ -297,6 +308,28 @@ export async function POST(req: NextRequest) {
                     });
                 } catch (e) {
                     console.error("Asst msg save error:", e);
+                }
+            }
+
+            // --- Smart Title Generation (Only for new conversations) ---
+            if (userId !== "test-user" && fullText && messages.length <= 2) {
+                try {
+                    const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY || "" });
+                    const titleGen = await openai.chat.completions.create({
+                         model: "gpt-4o-mini",
+                         messages: [
+                             { role: "system", content: "Generate a 3-5 word catchy title for this chat based on the user's message. Output ONLY the title, no quotes." },
+                             { role: "user", content: messages[0].content }
+                         ],
+                         max_tokens: 20
+                    });
+                    const smartTitle = titleGen.choices[0]?.message?.content || "Neural Record";
+                    await prisma.conversation.update({
+                        where: { id: currentConversationId },
+                        data: { title: smartTitle }
+                    });
+                } catch (error) {
+                    console.error("Title generation failed:", error);
                 }
             }
 

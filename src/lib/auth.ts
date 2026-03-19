@@ -60,55 +60,71 @@ export const authOptions: NextAuthOptions = {
             name: "Secure Protocol",
             credentials: {
                 email: { label: "Email", type: "text" },
-                code: { label: "Code", type: "text" }
+                code: { label: "Code", type: "text", placeholder: "Secure Code or Password" },
+                password: { label: "Password", type: "password" }
             },
             async authorize(credentials) {
-                if (!credentials?.email || !credentials?.code) return null;
+                if (!credentials?.email) return null;
 
                 const email = credentials.email.toLowerCase().trim();
-                const code = credentials.code.trim();
+                const codeOrPass = credentials.code?.trim() || "";
 
                 const lockout = isRateLimited(email);
                 if (lockout.limited) {
                     throw new Error(`LOCKDOWN: Too many failed attempts. Try again in ${lockout.timeLeft} minutes.`);
                 }
 
+                // --- 1. SESSION_START: Try Creator Override (Dev Bypass) ---
                 const creatorEmail = process.env.CREATOR_EMAIL?.toLowerCase().trim();
                 const creatorPass = process.env.CREATOR_PASSWORD?.trim();
                 const isCreator = creatorEmail && email === creatorEmail;
 
-                // 1. Try Creator Password
-                const isMatch = (code === creatorPass) || (code.toLowerCase() === creatorPass?.toLowerCase());
-
-                if (isCreator && creatorPass && isMatch) {
-                    console.log(`[AUTH] Creator login successful for ${email}`);
+                if (isCreator && creatorPass && (codeOrPass === creatorPass || codeOrPass.toLowerCase() === creatorPass.toLowerCase())) {
+                    console.log(`[AUTH] Creator Override successful for ${email}`);
                     recordAttempt(email, true);
-                } else {
-                    if (isCreator) console.log(`[AUTH] Creator login FAILED for ${email}. Entered: ${code}`);
-                    // 2. Try OTP
-                    const tokenRecord = await prisma.verificationToken.findFirst({
-                        where: { identifier: email, token: code }
-                    });
-
-                    if (!tokenRecord || tokenRecord.expires < new Date()) {
-                        recordAttempt(email, false);
-                        return null;
+                    let user = await prisma.user.findUnique({ where: { email } });
+                    if (!user) {
+                        user = await prisma.user.create({
+                            data: { email, name: "Creator", role: "CREATOR" }
+                        });
                     }
+                    return user;
+                }
+
+                // --- 2. SESSION_STEP: Try Stored Password (Traditional Auth) ---
+                let user = await prisma.user.findUnique({ where: { email } });
+                if (user && user.password && codeOrPass) {
+                    const bcrypt = await import("bcryptjs");
+                    const isValid = await bcrypt.compare(codeOrPass, user.password);
+                    if (isValid) {
+                        console.log(`[AUTH] Password verification successful for ${email}`);
+                        recordAttempt(email, true);
+                        return user;
+                    }
+                }
+
+                // --- 3. SESSION_FINAL: Try Secure OTP (One-Time Access) ---
+                const tokenRecord = await prisma.verificationToken.findFirst({
+                    where: { identifier: email, token: codeOrPass }
+                });
+
+                if (tokenRecord && tokenRecord.expires > new Date()) {
+                    console.log(`[AUTH] Secure OTP verification successful for ${email}`);
                     recordAttempt(email, true);
                     await prisma.verificationToken.deleteMany({ where: { identifier: email } });
+
+                    if (!user) {
+                        user = await prisma.user.create({
+                            data: { email, name: email.split('@')[0], role: "USER" }
+                        });
+                    }
+                    return user;
                 }
 
-                let user = await prisma.user.findUnique({ where: { email } });
-                if (!user) {
-                    user = await prisma.user.create({
-                        data: {
-                            email,
-                            name: isCreator ? "Creator" : email.split('@')[0],
-                            role: isCreator ? "CREATOR" : "USER"
-                        }
-                    });
-                }
-                return user;
+                // --- FAILURE_LOG: Record Failed Attempt ---
+                console.log(`[AUTH] Authentication failed for ${email}`);
+                recordAttempt(email, false);
+                return null;
             }
         })
     ],

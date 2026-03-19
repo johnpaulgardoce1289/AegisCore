@@ -9,8 +9,10 @@ export async function POST(req: NextRequest) {
         const { email: rawEmail } = await req.json();
         const email = rawEmail?.toLowerCase().trim();
 
-        if (!email) {
-            return new NextResponse("Email required", { status: 400 });
+        // Regex for basic email validation
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!email || !emailRegex.test(email)) {
+            return new NextResponse("Invalid Protocol Address (Email)", { status: 400 });
         }
 
         // Generate a 6-digit random code

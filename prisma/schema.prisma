@@ -44,6 +44,7 @@ model User {
   email         String?   @unique
   emailVerified DateTime?
   image         String?
+  password      String?   // Hashed Neural Signature (Password)
   role          String    @default("USER") // For RBAC (Role Based Access Control)
   accounts      Account[]
   sessions      Session[]

@@ -30,44 +30,44 @@ const CodeBlock: React.FC<CodeBlockProps> = ({ language, value }) => {
     };
 
     return (
-        <div className="relative my-6 group rounded-xl border border-white/10 bg-[#0d0d0d] overflow-hidden shadow-2xl">
+        <div className="relative my-8 group/code rounded-2xl border border-white/5 bg-[#0a0a0a] overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.3)] hover:border-indigo-500/20 transition-all duration-500 ring-1 ring-white/5">
             {/* Header / Tab Bar */}
-            <div className="flex items-center justify-between px-4 py-2.5 bg-white/5 border-b border-white/5">
-                <div className="flex items-center space-x-3">
-                    <div className="flex space-x-1.5">
-                        <div className="w-2.5 h-2.5 rounded-full bg-red-500/40" />
-                        <div className="w-2.5 h-2.5 rounded-full bg-amber-500/40" />
-                        <div className="w-2.5 h-2.5 rounded-full bg-emerald-500/40" />
+            <div className="flex items-center justify-between px-5 py-3 bg-white/[0.03] border-b border-white/5">
+                <div className="flex items-center space-x-4">
+                    <div className="flex space-x-2">
+                        <div className="w-2.5 h-2.5 rounded-full bg-red-500/20 group-hover/code:bg-red-500/40 transition-colors" />
+                        <div className="w-2.5 h-2.5 rounded-full bg-amber-500/20 group-hover/code:bg-amber-500/40 transition-colors" />
+                        <div className="w-2.5 h-2.5 rounded-full bg-emerald-500/20 group-hover/code:bg-emerald-500/40 transition-colors" />
                     </div>
-                    <div className="h-4 w-px bg-white/10 mx-1" />
+                    <div className="h-4 w-px bg-white/10" />
                     <div className="flex items-center space-x-2">
-                        <Code2 className="w-3.5 h-3.5 text-indigo-400" />
-                        <span className="text-[11px] font-bold text-neutral-400 uppercase tracking-wider">
-                            {language || "code"}
+                        <Code2 className="w-3.5 h-3.5 text-indigo-400 group-hover/code:scale-110 transition-transform" />
+                        <span className="text-[10px] font-black text-neutral-500 group-hover:text-neutral-300 uppercase tracking-[0.2em] transition-colors">
+                            {language || "source_code"}
                         </span>
                     </div>
                 </div>
-                <div className="flex items-center space-x-1">
+                <div className="flex items-center space-x-2">
                     <button
                         onClick={downloadFile}
-                        className="p-1.5 rounded-md hover:bg-white/5 text-neutral-400 hover:text-white transition-all active:scale-95"
+                        className="p-2 rounded-xl hover:bg-white/5 text-neutral-500 hover:text-white transition-all active:scale-90"
                         title="Download Snippet"
                     >
-                        <Download className="w-3.5 h-3.5" />
+                        <Download className="w-4 h-4" />
                     </button>
                     <button
                         onClick={onCopy}
-                        className="flex items-center space-x-1.5 px-2.5 py-1 rounded-md hover:bg-white/5 text-neutral-400 hover:text-white transition-all active:scale-95"
+                        className={`flex items-center space-x-2 px-3 py-1.5 rounded-xl transition-all active:scale-95 border ${copied ? 'bg-emerald-500/10 border-emerald-500/20 text-emerald-400' : 'bg-white/5 border-transparent text-neutral-400 hover:text-white hover:bg-white/10'}`}
                     >
                         {copied ? (
                             <>
-                                <Check className="w-3.5 h-3.5 text-emerald-400" />
-                                <span className="text-[11px] font-bold text-emerald-400">COPIED</span>
+                                <Check className="w-3.5 h-3.5" />
+                                <span className="text-[10px] font-black uppercase tracking-widest">Saved</span>
                             </>
                         ) : (
                             <>
                                 <Copy className="w-3.5 h-3.5" />
-                                <span className="text-[11px] font-bold">COPY</span>
+                                <span className="text-[10px] font-black uppercase tracking-widest">Copy</span>
                             </>
                         )}
                     </button>
@@ -75,16 +75,19 @@ const CodeBlock: React.FC<CodeBlockProps> = ({ language, value }) => {
             </div>
 
             {/* Content */}
-            <div className="relative">
+            <div className="relative group/content">
+                <div className="absolute right-4 top-4 opacity-0 group-hover/content:opacity-20 transition-opacity pointer-events-none">
+                     <Package className="w-12 h-12 text-white" />
+                </div>
                 <SyntaxHighlighter
                     language={language || "text"}
                     style={vscDarkPlus}
                     customStyle={{
                         margin: 0,
-                        padding: "1.5rem",
+                        padding: "1.75rem",
                         background: "transparent",
                         fontSize: "13px",
-                        lineHeight: "1.6",
+                        lineHeight: "1.7",
                     }}
                     codeTagProps={{
                         style: {
